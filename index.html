@@ -80,7 +80,7 @@ button {
     border-radius: 6px;
 }
 
-/* ✅ FIXED 10-COLUMN GRID */
+/* 10 COLUMN GRID */
 .grid {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
@@ -89,7 +89,6 @@ button {
     margin: auto;
 }
 
-/* equal size squares */
 .kph {
     aspect-ratio: 1 / 1;
     display: flex;
@@ -172,7 +171,7 @@ function sound() {
 }
 
 function update() {
-    let total = max + 1;
+    let total = max; // because we start at 1 now
     let percent = total ? Math.round((completed.length / total) * 100) : 0;
 
     document.getElementById("percent").innerText = percent + "%";
@@ -186,12 +185,12 @@ function generate() {
     const grid = document.getElementById("grid");
     grid.innerHTML = "";
 
-    for (let i = 0; i <= max; i++) {
+    // 🔥 START AT 1 (NOT 0)
+    for (let i = 1; i <= max; i++) {
 
         let box = document.createElement("div");
         box.className = "kph";
 
-        // last number gets "+"
         box.innerText = (i === max) ? i + "+" : i;
 
         if (completed.includes(i)) box.classList.add("done");
