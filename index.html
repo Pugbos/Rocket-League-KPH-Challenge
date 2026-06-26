@@ -80,22 +80,30 @@ button {
     border-radius: 6px;
 }
 
+/* ✅ FIXED 10-COLUMN GRID */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-    gap: 8px;
-    max-width: 900px;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 6px;
+    max-width: 700px;
     margin: auto;
 }
 
+/* equal size squares */
 .kph {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     background: #2b2b2b;
     border: 2px solid #444;
     border-radius: 8px;
-    padding: 12px 0;
+
     cursor: pointer;
     user-select: none;
     font-weight: bold;
+
     transition: transform 0.08s ease;
 }
 
@@ -183,12 +191,8 @@ function generate() {
         let box = document.createElement("div");
         box.className = "kph";
 
-        // ONLY LAST ONE GETS "+"
-        if (i === max) {
-            box.innerText = i + "+";
-        } else {
-            box.innerText = i;
-        }
+        // last number gets "+"
+        box.innerText = (i === max) ? i + "+" : i;
 
         if (completed.includes(i)) box.classList.add("done");
 
