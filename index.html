@@ -14,6 +14,7 @@ body {
     display: flex;
 }
 
+/* LEFT PROGRESS BAR */
 #leftPanel {
     width: 90px;
     height: 100vh;
@@ -22,6 +23,7 @@ body {
     align-items: center;
     justify-content: flex-end;
     border-right: 2px solid #333;
+    position: relative;
     padding-bottom: 10px;
 }
 
@@ -49,27 +51,48 @@ body {
     transition: height 0.15s ease;
 }
 
+/* MAIN */
 #main {
     flex: 1;
     padding: 20px;
     text-align: center;
 }
 
+h1 {
+    margin-top: 10px;
+}
+
+/* CONTROLS */
+.controls {
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
 input {
     padding: 10px;
     font-size: 16px;
+    width: 160px;
+    text-align: center;
 }
 
 button {
-    padding: 10px 15px;
+    padding: 10px 12px;
     font-size: 16px;
     cursor: pointer;
     background: #2ecc71;
     border: none;
     color: white;
-    margin-left: 5px;
+    border-radius: 6px;
 }
 
+button:active {
+    transform: scale(0.95);
+}
+
+/* GRID */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
@@ -98,6 +121,7 @@ button {
     border-color: #2ecc71;
 }
 
+/* click animation */
 .pop {
     animation: pop 0.12s ease;
 }
@@ -122,8 +146,16 @@ button {
 <div id="main">
     <h1>Rocket League KPH Challenge</h1>
 
-    <input id="maxKph" type="number" placeholder="Max KPH">
-    <button onclick="generate()">Generate</button>
+    <!-- NEW + / - CONTROLS -->
+    <div class="controls">
+        <button onclick="changeMax(-10)">−</button>
+
+        <input id="maxKph" type="number" value="100">
+
+        <button onclick="changeMax(10)">+</button>
+
+        <button onclick="generate()">Generate</button>
+    </div>
 
     <div class="grid" id="grid"></div>
 </div>
@@ -131,6 +163,17 @@ button {
 <script>
 let completed = JSON.parse(localStorage.getItem("kph")) || [];
 let max = 0;
+
+function changeMax(amount) {
+    const input = document.getElementById("maxKph");
+    let value = parseInt(input.value) || 0;
+
+    value += amount;
+    if (value < 0) value = 0;
+    if (value > 2000) value = 2000;
+
+    input.value = value;
+}
 
 function sound() {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
